@@ -150,7 +150,7 @@ const handleInput = () => {
             const color = wordColorMap[word];
             const escapedWord = escapeHTML(word);
             pillsHTML += `
-                <div class="pill" style="border-left: 4px solid ${color}" data-word="${escapedWord}">
+                <div class="pill" data-word="${escapedWord}">
                     <span class="word-text">${escapedWord}</span>
                     <span class="count-block" style="background-color: ${color}; color: var(--bg-main);">${wordCounts[word]}</span>
                 </div>`;

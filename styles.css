@@ -12,12 +12,12 @@
   --error-border: #ff0000;
 
   /* Brutally bright, Highly Saturated Red/Orange range for Light Mode */
-  --h-color-1: hsla(10, 100%, 65%, 0.8);
-  --h-color-2: hsla(25, 100%, 65%, 0.8);
-  --h-color-3: hsla(0, 100%, 65%, 0.8);
-  --h-color-4: hsla(35, 100%, 65%, 0.8);
-  --h-color-5: hsla(5, 100%, 65%, 0.8);
-  --h-color-6: hsla(20, 100%, 65%, 0.8);
+  --h-color-1: hsla(10, 100%, 65%, 1.0);
+  --h-color-2: hsla(25, 100%, 65%, 1.0);
+  --h-color-3: hsla(0, 100%, 65%, 1.0);
+  --h-color-4: hsla(35, 100%, 65%, 1.0);
+  --h-color-5: hsla(5, 100%, 65%, 1.0);
+  --h-color-6: hsla(20, 100%, 65%, 1.0);
 }
 
 /* Crisp Minimalist Dark Theme */
@@ -35,12 +35,12 @@
   /* Brighter warning glow */
 
   /* Intensely Saturated Red/Orange range for Dark Mode */
-  --h-color-1: hsla(10, 100%, 65%, 0.7);
-  --h-color-2: hsla(25, 100%, 65%, 0.7);
-  --h-color-3: hsla(0, 100%, 70%, 0.7);
-  --h-color-4: hsla(35, 100%, 60%, 0.7);
-  --h-color-5: hsla(5, 100%, 70%, 0.7);
-  --h-color-6: hsla(20, 100%, 65%, 0.7);
+  --h-color-1: hsla(10, 100%, 65%, 1.0);
+  --h-color-2: hsla(25, 100%, 65%, 1.0);
+  --h-color-3: hsla(0, 100%, 70%, 1.0);
+  --h-color-4: hsla(35, 100%, 60%, 1.0);
+  --h-color-5: hsla(5, 100%, 70%, 1.0);
+  --h-color-6: hsla(20, 100%, 65%, 1.0);
 }
 
 * {
@@ -173,10 +173,7 @@ header p {
   min-height: 0;
 }
 
-.editor-container.has-error {
-  outline: 2px solid var(--error-border);
-  outline-offset: 4px;
-}
+/* Removed error outline to keep the UI clean even with repeats */
 
 /* Identical layouts for perfect wrap & overlay */
 #poemInput,
