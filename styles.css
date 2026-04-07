@@ -70,8 +70,6 @@ body {
   justify-content: center;
   align-items: stretch;
   line-height: 1.6;
-  min-height: 100vh;
-  transition: color 0.3s ease;
   position: relative;
 }
 
@@ -173,7 +171,7 @@ header p {
   min-height: 0;
 }
 
-/* Removed error outline to keep the UI clean even with repeats */
+
 
 /* Identical layouts for perfect wrap & overlay */
 #poemInput,

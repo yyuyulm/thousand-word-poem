@@ -1,8 +1,6 @@
 const textarea = document.getElementById('poemInput');
 const backdrop = document.getElementById('backdrop');
-const editorContainer = document.getElementById('editorContainer');
 const repeatedWordsList = document.getElementById('repeatedWordsList');
-const uniqueWordsList = document.getElementById('uniqueWordsList');
 const filteredVocabList = document.getElementById('filteredVocabList');
 const uniqueHeading = document.getElementById('uniqueHeading');
 const countHeading = document.getElementById('countHeading');
@@ -141,9 +139,8 @@ const handleInput = () => {
     // Keep scroll in sync if content changes height
     backdrop.scrollTop = textarea.scrollTop;
     
-    // Toggle styling & update insights UI
+    // Update insights UI
     if (repeatingWordsSet.size > 0) {
-        editorContainer.classList.add('has-error');
         
         let pillsHTML = '';
         orderedRepeatingWords.forEach(word => {
@@ -157,7 +154,6 @@ const handleInput = () => {
         });
         repeatedWordsList.innerHTML = pillsHTML;
     } else {
-        editorContainer.classList.remove('has-error');
         repeatedWordsList.innerHTML = '<span class="stat">No repeating words yet.<br>Every word in your poem is unique :)</span>';
     }
 };

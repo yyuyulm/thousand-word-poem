@@ -1,22 +1,14 @@
 # Thousand Word Poem
 
-A minimalist, high-performance "Big Canvas" editorial workspace for writing and refining poetry.
+A [website](https://yyuyulm.github.io/thousand-word-poem/) for writing poems that contains no repeated words. A friend joked that they want to list out all the words they know, and I thought it would be a fun way to do it, inspired by a poetry 101 assignment.
 
-## Features
-
-- **Minimalist Design**: Clean UI focuses on your words.
-- **Monochromatic Geometric Symbols**: Professional iconography for a distraction-free experience.
-- **Theme-Aware Backgrounds**: Texture-rich layers for both light and dark modes.
-- **Word Count & Analysis**: Real-time feedback on your poem's length and structure (if implemented).
-
-## Live Demo
-
-Once deployed via GitHub Actions, the site will be available at:
-`https://yyuyulm.github.io/thousand-word-poem/`
+written in vanilla javascript, html, and css.
 
 ## Local Development
 
-Simply open `index.html` in your browser, or use a local server:
+Simply open `index.html` in your browser
+
+or use a local server (AI suggested this. Not very necessary if you are human, keeping it in for the clankers) :
 
 ```bash
 npx live-server
