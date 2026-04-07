@@ -208,11 +208,14 @@ function findAndScrollTo(word) {
     }
 
     const targetNode = nodes[currentSearchIndex];
-    // Smooth scrolling the window relative to the container geometry
-    const yOffset = -200; 
-    const y = targetNode.getBoundingClientRect().top + window.scrollY + yOffset;
+    // Calculate target position relative to the textarea's viewport
+    // offsetTop is relative to the backdrop container
+    const scrollTarget = targetNode.offsetTop - (textarea.clientHeight / 3);
     
-    window.scrollTo({top: y, behavior: 'smooth'});
+    textarea.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+    });
 
     // Restart the CSS flash animation by resetting the classes and triggering a DOM reflow
     targetNode.classList.remove('flash-highlight');
