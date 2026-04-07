@@ -18,10 +18,10 @@ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 function setTheme(theme) {
     if (theme === 'dark') {
         rootElement.setAttribute('data-theme', 'dark');
-        themeToggleBtn.innerHTML = '☀️'; // Change to light mode icon
+        themeToggleBtn.innerHTML = '☼'; // Change to light mode symbol (Sun)
     } else {
         rootElement.setAttribute('data-theme', 'light');
-        themeToggleBtn.innerHTML = '🌙'; // Change to dark mode icon
+        themeToggleBtn.innerHTML = '☾'; // Change to dark mode symbol (Moon)
     }
 }
 
