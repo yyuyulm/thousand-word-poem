@@ -2,9 +2,9 @@ const textarea = document.getElementById('poemInput');
 const backdrop = document.getElementById('backdrop');
 const editorContainer = document.getElementById('editorContainer');
 const repeatedWordsList = document.getElementById('repeatedWordsList');
-const wordCountDisplay = document.getElementById('wordCount');
 const uniqueWordsList = document.getElementById('uniqueWordsList');
-const uniqueWordCountDisplay = document.getElementById('uniqueWordCount');
+const uniqueHeading = document.getElementById('uniqueHeading');
+const countHeading = document.getElementById('countHeading');
 
 // --- Theme Toggler ---
 const themeToggleBtn = document.getElementById('themeToggle');
@@ -78,21 +78,6 @@ const handleInput = () => {
         }
     });
 
-    wordCountDisplay.textContent = `Words: ${rawWords.length}`;
-
-    // Calculate unique alphabetized vocabulary
-    const uniqueWordsAlphabetical = Object.keys(wordCounts).sort((a, b) => a.localeCompare(b));
-    uniqueWordCountDisplay.textContent = `Unique: ${uniqueWordsAlphabetical.length}`;
-    
-    if (uniqueWordsAlphabetical.length > 0) {
-        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => {
-            const escapedWord = escapeHTML(w);
-            return `<div class="vocab-item" data-word="${escapedWord}">${escapedWord}</div>`;
-        }).join('');
-    } else {
-        uniqueWordsList.innerHTML = '<span class="stat">No words yet!</span>';
-    }
-
     // Filter to only repeating words, keeping their first occurrence order
     const orderedRepeatingWords = firstOccurrenceOrder.filter(w => repeatingWordsSet.has(w));
 
@@ -103,6 +88,21 @@ const handleInput = () => {
         wordColorMap[word] = highlightColors[colorIndex % highlightColors.length];
         colorIndex++;
     });
+
+    countHeading.textContent = `Word Count: ${rawWords.length}`;
+
+    // Calculate unique alphabetized vocabulary
+    const uniqueWordsAlphabetical = Object.keys(wordCounts).sort((a, b) => a.localeCompare(b));
+    uniqueHeading.textContent = `Unique: ${uniqueWordsAlphabetical.length}`;
+    
+    if (uniqueWordsAlphabetical.length > 0) {
+        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => {
+            const escapedWord = escapeHTML(w);
+            return `<div class="vocab-item" data-word="${escapedWord}">${escapedWord}</div>`;
+        }).join('');
+    } else {
+        uniqueWordsList.innerHTML = '<span class="stat">No words yet!</span>';
+    }
 
     // We split by Word Regex to ensure we preserve all other characters intact safely
     const tokens = text.split(/([\p{L}]+(?:-[\p{L}]+)*)/gu);
@@ -140,12 +140,16 @@ const handleInput = () => {
         orderedRepeatingWords.forEach(word => {
             const color = wordColorMap[word];
             const escapedWord = escapeHTML(word);
-            pillsHTML += `<div class="pill" style="border-left: 6px solid ${color}" data-word="${escapedWord}">${escapedWord} <span class="count">${wordCounts[word]}</span></div>`;
+            pillsHTML += `
+                <div class="pill" style="border-left: 4px solid ${color}" data-word="${escapedWord}">
+                    <span class="word-text">${escapedWord}</span>
+                    <span class="count-block" style="background-color: ${color}; color: var(--bg-main);">${wordCounts[word]}</span>
+                </div>`;
         });
         repeatedWordsList.innerHTML = pillsHTML;
     } else {
         editorContainer.classList.remove('has-error');
-        repeatedWordsList.innerHTML = '<span class="stat">No repeats yet. Your poem is completely unique.</span>';
+        repeatedWordsList.innerHTML = '<span class="stat">No repeating words yet.<br>Every word in your poem is unique :)</span>';
     }
 };
 

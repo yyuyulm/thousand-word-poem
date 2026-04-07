@@ -12,18 +12,17 @@
     <div class="app-container">
         <header>
             <div class="header-top">
-                <h1>Thousand Word Poem</h1>
+                <h1>Thousand-Word-Poem</h1>
                 <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">☀️</button>
             </div>
-            <p>Type your poem. Repeating words will be grouped and highlighted in orange and red hues.</p>
+            <p>Make a poem where every word appears only once.</p>
         </header>
 
         <main class="main-layout">
             <!-- Left Sidebar: Vocabulary -->
             <aside class="status-panel">
                 <div class="status-header">
-                    <h3>Vocabulary</h3>
-                    <span id="uniqueWordCount" class="stat">Unique: 0</span>
+                    <h3 id="uniqueHeading">Unique: 0</h3>
                 </div>
                 <div id="uniqueWordsList" class="word-list">
                     <span class="stat">No words yet!</span>
@@ -32,13 +31,12 @@
 
             <div class="editor-container" id="editorContainer">
                 <div class="backdrop" id="backdrop"></div>
-                <textarea id="poemInput" placeholder="Start typing your poem here..." spellcheck="false"></textarea>
+                <textarea id="poemInput" placeholder="Start typing without repeating..." spellcheck="false"></textarea>
             </div>
 
             <aside class="status-panel">
                 <div class="status-header">
-                    <h3>Analysis</h3>
-                    <span id="wordCount" class="stat">Words: 0</span>
+                    <h3 id="countHeading">Word Count: 0</h3>
                 </div>
                 <div id="repeatedWordsList" class="repeated-list">
                     <span class="stat">No repeats yet!</span>
