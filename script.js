@@ -131,7 +131,9 @@ const handleInput = () => {
     }
 
     backdrop.innerHTML = finalHTML;
-
+    // Keep scroll in sync if content changes height
+    backdrop.scrollTop = textarea.scrollTop;
+    
     // Toggle styling & update insights UI
     if (repeatingWordsSet.size > 0) {
         editorContainer.classList.add('has-error');
@@ -154,6 +156,11 @@ const handleInput = () => {
 };
 
 textarea.addEventListener('input', handleInput);
+
+// Sync scrolling
+textarea.addEventListener('scroll', () => {
+    backdrop.scrollTop = textarea.scrollTop;
+});
 
 // Window resize can affect wrapping bounds slightly
 window.addEventListener('resize', handleInput);

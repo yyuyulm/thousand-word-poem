@@ -38,15 +38,19 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background: var(--bg-main);
   color: var(--text-primary);
   font-family: 'Times New Roman', Georgia, serif;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 4rem 1.5rem;
+  align-items: stretch;
+  padding: 1.5rem;
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -54,16 +58,19 @@ body {
 .app-container {
   width: 100%;
   max-width: 1800px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 main.main-layout {
   display: grid;
   grid-template-columns: 260px 1fr 320px;
+  grid-template-rows: 100%;
   gap: 4rem;
-  align-items: start;
+  flex: 1;
+  min-height: 0;
 }
 
 @media (max-width: 900px) {
@@ -122,9 +129,11 @@ header p {
 .editor-container {
   display: grid;
   width: 100%;
-  min-height: 500px;
+  height: 100%;
   background: transparent;
   border: none;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .editor-container.has-error {
@@ -149,10 +158,27 @@ header p {
 }
 
 #poemInput, #backdrop {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+}
+
+/* Hide scrollbar on backdrop but keep on textarea */
+#backdrop::-webkit-scrollbar {
+  display: none;
+}
+
+#poemInput::-webkit-scrollbar {
+  width: 8px;
+}
+#poemInput::-webkit-scrollbar-track {
+  background: transparent;
+}
+#poemInput::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
 }
 
 #backdrop {
@@ -176,14 +202,15 @@ mark {
 
 .status-panel {
   position: sticky;
-  top: 2rem;
-  height: calc(100vh - 4rem);
+  top: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 0;
   padding: 0;
   background: transparent;
   border: none;
+  min-height: 0;
 }
 
 /* Sleek scrollbar for the side lists */
