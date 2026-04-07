@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A tool that checks for repeating words in your poetry.">
+    <title>Thousand Word Poem</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-top">
+                <h1>Thousand Word Poem</h1>
+                <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">☀️</button>
+            </div>
+            <p>Type your poem. Repeating words will be grouped and highlighted in orange and red hues.</p>
+        </header>
+
+        <main class="main-layout">
+            <div class="editor-container" id="editorContainer">
+                <div class="backdrop" id="backdrop"></div>
+                <textarea id="poemInput" placeholder="Start typing your poem here..." spellcheck="false"></textarea>
+            </div>
+
+            <aside class="status-panel">
+                <div class="status-header">
+                    <h3>Analysis</h3>
+                    <span id="wordCount" class="stat">Words: 0</span>
+                </div>
+                <div id="repeatedWordsList" class="repeated-list">
+                    <span class="stat">No repeats yet!</span>
+                </div>
+            </aside>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
