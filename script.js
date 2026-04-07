@@ -35,9 +35,6 @@ themeToggleBtn.addEventListener('click', () => {
 
 
 // --- Poem Logic ---
-const stopWords = new Set([
-  'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'as', 'is', 'are', 'was', 'were', 'it', 'i', 'you', 'he', 'she', 'they', 'we', 'that', 'this', 'these', 'those', 'my', 'your', 'his', 'her', 'their', 'our'
-]);
 
 // A set of colors matching CSS variables for red/orange distribution
 const highlightColors = [
@@ -58,19 +55,17 @@ const escapeHTML = (str) => {
 const handleInput = () => {
     const text = textarea.value;
     
-    // Calculate words
-    const rawWords = text.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g) || [];
+    // Calculate words using Unicode property escapes
+    const rawWords = text.match(/[\p{L}]+(?:-[\p{L}]+)*/gu) || [];
     
     const wordCounts = {};
     const repeatingWords = new Set();
     
     rawWords.forEach(word => {
         const lowerWord = word.toLowerCase();
-        if (!stopWords.has(lowerWord)) {
-            wordCounts[lowerWord] = (wordCounts[lowerWord] || 0) + 1;
-            if (wordCounts[lowerWord] > 1) {
-                repeatingWords.add(lowerWord);
-            }
+        wordCounts[lowerWord] = (wordCounts[lowerWord] || 0) + 1;
+        if (wordCounts[lowerWord] > 1) {
+            repeatingWords.add(lowerWord);
         }
     });
 
@@ -85,11 +80,11 @@ const handleInput = () => {
     });
 
     // We split by Word Regex to ensure we preserve all other characters intact safely
-    const tokens = text.split(/([A-Za-z]+(?:'[A-Za-z]+)?)/g);
+    const tokens = text.split(/([\p{L}]+(?:-[\p{L}]+)*)/gu);
     let finalHTML = '';
     
     tokens.forEach(token => {
-        if (/^[A-Za-z]+(?:'[A-Za-z]+)?$/.test(token)) { // Is a word token
+        if (/^[\p{L}]+(?:-[\p{L}]+)*$/u.test(token)) { // Is a word token
             const lowerWord = token.toLowerCase();
             if (repeatingWords.has(lowerWord)) {
                 const color = wordColorMap[lowerWord];
