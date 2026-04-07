@@ -5,7 +5,7 @@
   --text-secondary: #6c6c6c;
   --border: #cccccc;
   --error-border: #ff0000;
-  
+
   /* Brutally bright, Highly Saturated Red/Orange range for Light Mode */
   --h-color-1: hsla(10, 100%, 65%, 0.8);
   --h-color-2: hsla(25, 100%, 65%, 0.8);
@@ -21,7 +21,8 @@
   --text-primary: #f5f5f5;
   --text-secondary: #cccccc;
   --border: #444444;
-  --error-border: #ff6666; /* Brighter warning glow */
+  --error-border: #ff6666;
+  /* Brighter warning glow */
 
   /* Intensely Saturated Red/Orange range for Dark Mode */
   --h-color-1: hsla(10, 100%, 65%, 0.7);
@@ -38,7 +39,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -142,7 +144,8 @@ header p {
 }
 
 /* Identical layouts for perfect wrap & overlay */
-#poemInput, #backdrop {
+#poemInput,
+#backdrop {
   grid-area: 1 / 1;
   font-family: 'Times New Roman', Georgia, serif;
   font-size: 1.15rem;
@@ -157,7 +160,8 @@ header p {
   word-spacing: normal;
 }
 
-#poemInput, #backdrop {
+#poemInput,
+#backdrop {
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
@@ -173,9 +177,11 @@ header p {
 #poemInput::-webkit-scrollbar {
   width: 8px;
 }
+
 #poemInput::-webkit-scrollbar-track {
   background: transparent;
 }
+
 #poemInput::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 10px;
@@ -218,10 +224,12 @@ mark {
 .repeated-list::-webkit-scrollbar {
   width: 8px;
 }
+
 .word-list::-webkit-scrollbar-track,
 .repeated-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .word-list::-webkit-scrollbar-thumb,
 .repeated-list::-webkit-scrollbar-thumb {
   background: var(--border);
@@ -231,10 +239,11 @@ mark {
 .status-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 
 h3 {
@@ -268,7 +277,8 @@ h3 {
   font-weight: 500;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
+  line-height: 1.6;
   color: var(--text-primary);
   background: transparent;
   border: none;
@@ -282,27 +292,73 @@ h3 {
 }
 
 .pill .word-text {
-  padding: 0.4rem 0.6rem;
+  padding: 0 0.6rem;
   display: flex;
   align-items: center;
 }
 
 .pill .count-block {
-  padding: 0.4rem 0.8rem;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
   border-left: none;
 }
 
 /* Vocabulary List on the left */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.search-icon {
+  font-size: 0.9rem;
+  opacity: 0.5;
+  color: var(--text-secondary);
+}
+
+#vocabSearch {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0.1rem 0;
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#vocabSearch:focus {
+  border-bottom-color: var(--text-primary);
+}
+
+#vocabSearch::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+  font-size: 0.8rem;
+}
+
 .word-list {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   overflow-y: auto;
   flex: 1;
-  align-items: flex-start;
+  align-items: stretch;
+  width: 100%;
+}
+
+#filteredVocabList {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
 }
 
 .vocab-item {
@@ -313,17 +369,27 @@ h3 {
   border-bottom: none;
   cursor: pointer;
   border-left: none;
+  display: flex;
+  align-items: center;
+  transition: all 0.1s;
 }
 
-.vocab-item:hover {
+.vocab-item span {
+  padding: 0;
+  transition: background-color 0s;
+}
+
+.vocab-item:hover span {
   background: var(--text-primary);
   color: var(--bg-main);
 }
 
 /* Animations for Ctrl+F visual hook */
 @keyframes flashFocus {
-  0%, 15% { 
-    background-color: var(--text-primary); 
+
+  0%,
+  15% {
+    background-color: var(--text-primary);
     color: var(--bg-main);
     border-radius: 0;
   }

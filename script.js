@@ -3,8 +3,10 @@ const backdrop = document.getElementById('backdrop');
 const editorContainer = document.getElementById('editorContainer');
 const repeatedWordsList = document.getElementById('repeatedWordsList');
 const uniqueWordsList = document.getElementById('uniqueWordsList');
+const filteredVocabList = document.getElementById('filteredVocabList');
 const uniqueHeading = document.getElementById('uniqueHeading');
 const countHeading = document.getElementById('countHeading');
+const vocabSearchInput = document.getElementById('vocabSearch');
 
 // --- Theme Toggler ---
 const themeToggleBtn = document.getElementById('themeToggle');
@@ -95,13 +97,18 @@ const handleInput = () => {
     const uniqueWordsAlphabetical = Object.keys(wordCounts).sort((a, b) => a.localeCompare(b));
     uniqueHeading.textContent = `Unique: ${uniqueWordsAlphabetical.length}`;
     
-    if (uniqueWordsAlphabetical.length > 0) {
-        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => {
+    // Filter vocabulary based on search input
+    const searchQuery = vocabSearchInput.value.toLowerCase().trim();
+    const filteredUniqueWords = uniqueWordsAlphabetical.filter(w => w.includes(searchQuery));
+
+    if (filteredUniqueWords.length > 0) {
+        filteredVocabList.innerHTML = filteredUniqueWords.map(w => {
             const escapedWord = escapeHTML(w);
-            return `<div class="vocab-item" data-word="${escapedWord}">${escapedWord}</div>`;
+            return `<div class="vocab-item" data-word="${escapedWord}"><span>${escapedWord}</span></div>`;
         }).join('');
     } else {
-        uniqueWordsList.innerHTML = '<span class="stat">No words yet!</span>';
+        const noResultsMsg = searchQuery ? 'No matches found.' : 'No words yet!';
+        filteredVocabList.innerHTML = `<span class="stat">${noResultsMsg}</span>`;
     }
 
     // We split by Word Regex to ensure we preserve all other characters intact safely
@@ -164,6 +171,9 @@ textarea.addEventListener('scroll', () => {
 
 // Window resize can affect wrapping bounds slightly
 window.addEventListener('resize', handleInput);
+
+// Listener for vocabulary search
+vocabSearchInput.addEventListener('input', handleInput);
 
 // --- Find and Scroll Logic (Ctrl+F behavior) ---
 let currentSearchWord = null;
