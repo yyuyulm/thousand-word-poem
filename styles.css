@@ -156,13 +156,11 @@ header p {
 }
 
 #backdrop {
-  z-index: 1;
   color: transparent;
   pointer-events: none;
 }
 
 #poemInput {
-  z-index: 2;
   background: transparent;
   color: var(--text-primary);
   outline: none;
@@ -170,7 +168,7 @@ header p {
 }
 
 mark {
-  color: transparent !important;
+  color: transparent;
   border-radius: 4px;
   padding: 0;
   margin: 0;
@@ -237,6 +235,12 @@ h3 {
   background: var(--bg-main);
   border: 1px solid transparent;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.pill:hover {
+  transform: translateY(-1px);
 }
 
 .pill .count {
@@ -261,8 +265,23 @@ h3 {
   padding: 0.4rem 0;
   border-bottom: 1px solid var(--border);
   transition: color 0.1s;
+  cursor: pointer;
 }
 
 .vocab-item:hover {
   color: var(--text-primary);
+}
+
+/* Animations for Ctrl+F visual hook */
+@keyframes flashFocus {
+  0%, 15% { 
+    background-color: var(--text-primary); 
+    color: var(--bg-main);
+  }
+}
+
+.flash-highlight {
+  position: relative;
+  z-index: 10;
+  animation: flashFocus 0.8s ease-out;
 }

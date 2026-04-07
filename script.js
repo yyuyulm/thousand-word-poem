@@ -51,7 +51,9 @@ const highlightColors = [
 const escapeHTML = (str) => {
     return str.replace(/&/g, '&amp;')
               .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;');
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#039;');
 };
 
 const handleInput = () => {
@@ -83,7 +85,10 @@ const handleInput = () => {
     uniqueWordCountDisplay.textContent = `Unique: ${uniqueWordsAlphabetical.length}`;
     
     if (uniqueWordsAlphabetical.length > 0) {
-        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => `<div class="vocab-item">${w}</div>`).join('');
+        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => {
+            const escapedWord = escapeHTML(w);
+            return `<div class="vocab-item" data-word="${escapedWord}">${escapedWord}</div>`;
+        }).join('');
     } else {
         uniqueWordsList.innerHTML = '<span class="stat">No words yet!</span>';
     }
@@ -106,11 +111,14 @@ const handleInput = () => {
     tokens.forEach(token => {
         if (/^[\p{L}]+(?:-[\p{L}]+)*$/u.test(token)) { // Is a word token
             const lowerWord = token.toLowerCase();
+            const escapedToken = escapeHTML(token);
+            const escapedDataWord = escapeHTML(lowerWord);
+            
             if (repeatingWordsSet.has(lowerWord)) {
                 const color = wordColorMap[lowerWord];
-                finalHTML += `<mark style="background-color: ${color};">${escapeHTML(token)}</mark>`;
+                finalHTML += `<mark style="background-color: ${color};" class="word-node" data-word="${escapedDataWord}">${escapedToken}</mark>`;
             } else {
-                finalHTML += escapeHTML(token);
+                finalHTML += `<span class="word-node" data-word="${escapedDataWord}">${escapedToken}</span>`;
             }
         } else { // Characters, whitespace, punctuation
             finalHTML += escapeHTML(token);
@@ -131,8 +139,8 @@ const handleInput = () => {
         let pillsHTML = '';
         orderedRepeatingWords.forEach(word => {
             const color = wordColorMap[word];
-            // We give the pill border the same color to connect the logic
-            pillsHTML += `<div class="pill" style="border-left: 6px solid ${color}">${word} <span class="count">${wordCounts[word]}</span></div>`;
+            const escapedWord = escapeHTML(word);
+            pillsHTML += `<div class="pill" style="border-left: 6px solid ${color}" data-word="${escapedWord}">${escapedWord} <span class="count">${wordCounts[word]}</span></div>`;
         });
         repeatedWordsList.innerHTML = pillsHTML;
     } else {
@@ -145,6 +153,70 @@ textarea.addEventListener('input', handleInput);
 
 // Window resize can affect wrapping bounds slightly
 window.addEventListener('resize', handleInput);
+
+// --- Find and Scroll Logic (Ctrl+F behavior) ---
+let currentSearchWord = null;
+let currentSearchIndex = -1;
+
+function findAndScrollTo(word) {
+    if (!word) return;
+    
+    if (word !== currentSearchWord) {
+        currentSearchWord = word;
+        currentSearchIndex = -1;
+    }
+
+    const cssSafeWord = word.replace(/"/g, '\\"');
+    const nodes = document.querySelectorAll(`.word-node[data-word="${cssSafeWord}"]`);
+    if (nodes.length === 0) return;
+
+    if (currentSearchIndex === -1) {
+        let bestIndex = 0;
+        // Find nearest next node visible within document flow
+        for (let i = 0; i < nodes.length; i++) {
+            const rect = nodes[i].getBoundingClientRect();
+            if (rect.top > 80) { // Slight offset for header space
+                bestIndex = i;
+                break;
+            }
+        }
+        currentSearchIndex = bestIndex;
+    } else {
+        // Cycling to the next occurrence
+        currentSearchIndex = (currentSearchIndex + 1) % nodes.length;
+    }
+
+    const targetNode = nodes[currentSearchIndex];
+    // Smooth scrolling the window relative to the container geometry
+    const yOffset = -200; 
+    const y = targetNode.getBoundingClientRect().top + window.scrollY + yOffset;
+    
+    window.scrollTo({top: y, behavior: 'smooth'});
+
+    // Restart the CSS flash animation by resetting the classes and triggering a DOM reflow
+    targetNode.classList.remove('flash-highlight');
+    if (targetNode.flashTimeout) clearTimeout(targetNode.flashTimeout);
+    void targetNode.offsetWidth; 
+    targetNode.classList.add('flash-highlight');
+    
+    // Automatically strip the class once the animation ends to return it below the editor text
+    targetNode.flashTimeout = setTimeout(() => {
+        targetNode.classList.remove('flash-highlight');
+    }, 900);
+}
+
+// Global hook for pill and vocabulary item clicks
+document.addEventListener('click', (e) => {
+    const vocabItem = e.target.closest('.vocab-item');
+    if (vocabItem) {
+        findAndScrollTo(vocabItem.getAttribute('data-word'));
+    }
+    
+    const pill = e.target.closest('.pill');
+    if (pill) {
+        findAndScrollTo(pill.getAttribute('data-word'));
+    }
+});
 
 // Initial call
 handleInput();
