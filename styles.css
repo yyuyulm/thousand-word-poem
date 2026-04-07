@@ -5,15 +5,15 @@
   --text-primary: #111111;
   --text-secondary: #666666;
   --border: #d4d4d4;
-  --error-border: #990000;
+  --error-border: #ff0000;
   
-  /* Orange to Red Hues for highlights */
-  --h-color-1: rgba(255, 69, 0, 0.4);   /* Red-Orange */
-  --h-color-2: rgba(255, 140, 0, 0.4);  /* Dark Orange */
-  --h-color-3: rgba(220, 20, 60, 0.4);  /* Crimson */
-  --h-color-4: rgba(255, 99, 71, 0.4);  /* Tomato */
-  --h-color-5: rgba(178, 34, 34, 0.4);  /* Firebrick */
-  --h-color-6: rgba(255, 165, 0, 0.4);  /* Orange */
+  /* Brutally bright, Highly Saturated Red/Orange range for Light Mode */
+  --h-color-1: hsla(10, 100%, 65%, 0.8);
+  --h-color-2: hsla(25, 100%, 65%, 0.8);
+  --h-color-3: hsla(0, 100%, 65%, 0.8);
+  --h-color-4: hsla(35, 100%, 65%, 0.8);
+  --h-color-5: hsla(5, 100%, 65%, 0.8);
+  --h-color-6: hsla(20, 100%, 65%, 0.8);
 }
 
 /* Dark Theme Variables */
@@ -23,15 +23,15 @@
   --text-primary: #f5f5f5;
   --text-secondary: #999999;
   --border: #333333;
-  --error-border: #ff4444;
+  --error-border: #ff6666; /* Brighter warning glow */
 
-  /* Slightly more vibrant on dark mode */
-  --h-color-1: rgba(255, 69, 0, 0.6);
-  --h-color-2: rgba(255, 140, 0, 0.6);
-  --h-color-3: rgba(220, 20, 60, 0.6);
-  --h-color-4: rgba(255, 99, 71, 0.6);
-  --h-color-5: rgba(178, 34, 34, 0.6);
-  --h-color-6: rgba(255, 165, 0, 0.6);
+  /* Intensely Saturated Red/Orange range for Dark Mode */
+  --h-color-1: hsla(10, 100%, 65%, 0.7);
+  --h-color-2: hsla(25, 100%, 65%, 0.7);
+  --h-color-3: hsla(0, 100%, 70%, 0.7);
+  --h-color-4: hsla(35, 100%, 60%, 0.7);
+  --h-color-5: hsla(5, 100%, 70%, 0.7);
+  --h-color-6: hsla(20, 100%, 65%, 0.7);
 }
 
 * {
@@ -55,7 +55,7 @@ body {
 
 .app-container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -63,12 +63,12 @@ body {
 
 main.main-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 240px 1fr 300px;
   gap: 2rem;
   align-items: start;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   main.main-layout {
     grid-template-columns: 1fr;
   }
@@ -246,4 +246,23 @@ h3 {
   border-radius: 99px;
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+/* Vocabulary List on the left */
+.word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.vocab-item {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.1s;
+}
+
+.vocab-item:hover {
+  color: var(--text-primary);
 }

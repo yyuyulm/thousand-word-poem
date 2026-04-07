@@ -3,6 +3,8 @@ const backdrop = document.getElementById('backdrop');
 const editorContainer = document.getElementById('editorContainer');
 const repeatedWordsList = document.getElementById('repeatedWordsList');
 const wordCountDisplay = document.getElementById('wordCount');
+const uniqueWordsList = document.getElementById('uniqueWordsList');
+const uniqueWordCountDisplay = document.getElementById('uniqueWordCount');
 
 // --- Theme Toggler ---
 const themeToggleBtn = document.getElementById('themeToggle');
@@ -59,22 +61,40 @@ const handleInput = () => {
     const rawWords = text.match(/[\p{L}]+(?:-[\p{L}]+)*/gu) || [];
     
     const wordCounts = {};
-    const repeatingWords = new Set();
+    const repeatingWordsSet = new Set();
+    const firstOccurrenceOrder = [];
     
     rawWords.forEach(word => {
         const lowerWord = word.toLowerCase();
-        wordCounts[lowerWord] = (wordCounts[lowerWord] || 0) + 1;
+        if (!wordCounts[lowerWord]) {
+            wordCounts[lowerWord] = 0;
+            firstOccurrenceOrder.push(lowerWord);
+        }
+        wordCounts[lowerWord]++;
         if (wordCounts[lowerWord] > 1) {
-            repeatingWords.add(lowerWord);
+            repeatingWordsSet.add(lowerWord);
         }
     });
 
     wordCountDisplay.textContent = `Words: ${rawWords.length}`;
 
+    // Calculate unique alphabetized vocabulary
+    const uniqueWordsAlphabetical = Object.keys(wordCounts).sort((a, b) => a.localeCompare(b));
+    uniqueWordCountDisplay.textContent = `Unique: ${uniqueWordsAlphabetical.length}`;
+    
+    if (uniqueWordsAlphabetical.length > 0) {
+        uniqueWordsList.innerHTML = uniqueWordsAlphabetical.map(w => `<div class="vocab-item">${w}</div>`).join('');
+    } else {
+        uniqueWordsList.innerHTML = '<span class="stat">No words yet!</span>';
+    }
+
+    // Filter to only repeating words, keeping their first occurrence order
+    const orderedRepeatingWords = firstOccurrenceOrder.filter(w => repeatingWordsSet.has(w));
+
     // Map each identified repeating word to a specific color
     const wordColorMap = {};
     let colorIndex = 0;
-    repeatingWords.forEach(word => {
+    orderedRepeatingWords.forEach(word => {
         wordColorMap[word] = highlightColors[colorIndex % highlightColors.length];
         colorIndex++;
     });
@@ -86,7 +106,7 @@ const handleInput = () => {
     tokens.forEach(token => {
         if (/^[\p{L}]+(?:-[\p{L}]+)*$/u.test(token)) { // Is a word token
             const lowerWord = token.toLowerCase();
-            if (repeatingWords.has(lowerWord)) {
+            if (repeatingWordsSet.has(lowerWord)) {
                 const color = wordColorMap[lowerWord];
                 finalHTML += `<mark style="background-color: ${color};">${escapeHTML(token)}</mark>`;
             } else {
@@ -105,11 +125,11 @@ const handleInput = () => {
     backdrop.innerHTML = finalHTML;
 
     // Toggle styling & update insights UI
-    if (repeatingWords.size > 0) {
+    if (repeatingWordsSet.size > 0) {
         editorContainer.classList.add('has-error');
         
         let pillsHTML = '';
-        repeatingWords.forEach(word => {
+        orderedRepeatingWords.forEach(word => {
             const color = wordColorMap[word];
             // We give the pill border the same color to connect the logic
             pillsHTML += `<div class="pill" style="border-left: 6px solid ${color}">${word} <span class="count">${wordCounts[word]}</span></div>`;
