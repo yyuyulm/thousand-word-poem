@@ -19,34 +19,47 @@
         </header>
 
         <main class="main-layout">
-            <!-- Left Sidebar: Vocabulary -->
-            <aside class="status-panel">
-                <div class="status-header">
-                    <h3 id="uniqueHeading">Unique: 0</h3>
-                    <div class="search-container">
-                        <input type="text" id="vocabSearch" placeholder="Search..." spellcheck="false" autocomplete="off">
+            <!-- Panel Wrapper: side-by-side on mobile carousel, invisible on desktop -->
+            <div id="panelWrapper" class="panel-wrapper">
+                <!-- Left Sidebar: Vocabulary -->
+                <aside id="leftSidebar" class="status-panel">
+                    <div class="status-header">
+                        <h3 id="uniqueHeading">Unique: 0</h3>
+                        <div class="search-container">
+                            <input type="text" id="vocabSearch" placeholder="Search..." spellcheck="false" autocomplete="off">
+                        </div>
                     </div>
-                </div>
-                <div class="word-list">
-                    <div id="filteredVocabList">
-                        <span class="stat">No words yet!</span>
+                    <div class="word-list">
+                        <div id="filteredVocabList">
+                            <span class="stat">No words yet!</span>
+                        </div>
                     </div>
-                </div>
-            </aside>
+                </aside>
 
+                <!-- Right Sidebar: Repeated words -->
+                <aside id="rightSidebar" class="status-panel">
+                    <div class="status-header">
+                        <h3 id="countHeading">Word Count: 0</h3>
+                    </div>
+                    <div id="repeatedWordsList" class="repeated-list">
+                        <span class="stat">No repeats yet!</span>
+                </aside>
+            </div>
+
+            <!-- Editor -->
             <div class="editor-container">
                 <div class="backdrop" id="backdrop"></div>
                 <textarea id="poemInput" placeholder="Start typing without repeating..." spellcheck="false"></textarea>
             </div>
 
-            <aside class="status-panel">
-                <div class="status-header">
-                    <h3 id="countHeading">Word Count: 0</h3>
-                </div>
-                <div id="repeatedWordsList" class="repeated-list">
-                    <span class="stat">No repeats yet!</span>
-                </div>
-            </aside>
+            <!-- Mobile-only icon toolbar: last in flex column, always at bottom -->
+            <div class="mobile-toolbar">
+                <button id="leftToggle" class="sidebar-toggle icon-btn" aria-label="Toggle unique words">◫</button>
+                <button id="rightToggle" class="sidebar-toggle icon-btn" aria-label="Toggle word count">
+                    <span>!</span>
+                    <span id="repeatBadge" class="badge"></span>
+                </button>
+            </div>
         </main>
     </div>
     <script src="script.js"></script>

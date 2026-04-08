@@ -140,7 +140,11 @@ const handleInput = () => {
     backdrop.scrollTop = textarea.scrollTop;
     
     // Update insights UI
-    if (repeatingWordsSet.size > 0) {
+    const repeatingWordsCount = repeatingWordsSet.size;
+    const repeatBadge = document.getElementById('repeatBadge');
+    if (repeatingWordsCount > 0) {
+        repeatBadge.textContent = repeatingWordsCount;
+        repeatBadge.classList.add('active');
         
         let pillsHTML = '';
         orderedRepeatingWords.forEach(word => {
@@ -154,6 +158,7 @@ const handleInput = () => {
         });
         repeatedWordsList.innerHTML = pillsHTML;
     } else {
+        repeatBadge.classList.remove('active');
         repeatedWordsList.innerHTML = '<span class="stat">No repeating words yet.<br>Every word in your poem is unique :)</span>';
     }
 };
@@ -238,5 +243,42 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// --- Panel Toggles ---
+const leftToggle   = document.getElementById('leftToggle');
+const rightToggle  = document.getElementById('rightToggle');
+const panelWrapper = document.getElementById('panelWrapper');
+
+let activePanel = null; // 'left' | 'right' | null
+
+function showPanel(side) {
+    if (activePanel === side) {
+        // Tap same toggle again → close
+        panelWrapper.classList.remove('is-open');
+        activePanel = null;
+        return;
+    }
+
+    // Is it already open (switching)?
+    const isSwitching = activePanel !== null;
+    
+    // Open the container
+    panelWrapper.classList.add('is-open');
+    activePanel = side;
+
+    // Horizontal slide: left panel is at scrollLeft 0, right is offset by width
+    // Use requestAnimationFrame to ensure height transition and layout are ready
+    requestAnimationFrame(() => {
+        if (side === 'left') {
+            panelWrapper.scrollLeft = 0;
+        } else {
+            panelWrapper.scrollLeft = panelWrapper.offsetWidth;
+        }
+    });
+}
+
+leftToggle.addEventListener('click',  (e) => { e.stopPropagation(); showPanel('left');  });
+rightToggle.addEventListener('click', (e) => { e.stopPropagation(); showPanel('right'); });
+
 // Initial call
 handleInput();
+
