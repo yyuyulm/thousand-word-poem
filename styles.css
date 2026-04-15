@@ -130,8 +130,8 @@ main.main-layout {
 /* ── Mobile: vertical flex column ── */
 @media (max-width: 900px) {
   :root {
-    --bg-width: 100lvw;
-    --bg-height: 100lvh;
+    --bg-width: 100dvw;
+    --bg-height: 100dvh;
   }
 
   body {
