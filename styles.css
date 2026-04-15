@@ -25,9 +25,9 @@
 [data-theme="dark"] {
   --bg-main: #121212;
   --bg-image: url('darkmode_bg.jpg');
-  --bg-rotate: 90deg;
-  --bg-width: 100vh;
-  --bg-height: 100vw;
+  --bg-rotate: 0deg;
+  --bg-width: 100vw;
+  --bg-height: 100vh;
   --bg-opacity: 0.4;
   --text-primary: #f5f5f5;
   --text-primary-rgb: 245, 245, 245;
@@ -135,11 +135,6 @@ main.main-layout {
   :root {
     --bg-width: 100lvw;
     --bg-height: 100lvh;
-  }
-
-  [data-theme="dark"] {
-    --bg-width: 100lvh;
-    --bg-height: 100lvw;
   }
 
   body {
