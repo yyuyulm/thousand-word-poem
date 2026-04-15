@@ -137,6 +137,11 @@ main.main-layout {
     --bg-height: 100lvh;
   }
 
+  [data-theme="dark"] {
+    --bg-width: 100lvh;
+    --bg-height: 100lvw;
+  }
+
   body {
     height: auto;
     min-height: 100dvh;
