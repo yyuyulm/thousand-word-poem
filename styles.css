@@ -132,6 +132,16 @@ main.main-layout {
 
 /* ── Mobile: vertical flex column ── */
 @media (max-width: 900px) {
+  body {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .app-container {
+    height: auto;
+    min-height: calc(100dvh - 3rem);
+  }
+
   h1 {
     font-size: 1.5rem;
   }
