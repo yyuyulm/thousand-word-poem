@@ -144,8 +144,8 @@ main.main-layout {
     min-height: calc(100dvh - 3rem);
   }
 
-  h1 {
-    font-size: 1.2rem;
+  .header-top h1 {
+    font-size: 1.5rem;
   }
 
   main.main-layout {
