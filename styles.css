@@ -132,6 +132,10 @@ main.main-layout {
 
 /* ── Mobile: vertical flex column ── */
 @media (max-width: 900px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
   main.main-layout {
     flex-direction: column;
     height: 100%;
