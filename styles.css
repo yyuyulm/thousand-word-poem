@@ -3,8 +3,6 @@
   --bg-main: #f0f0f0;
   --bg-image: url('lightmode_bg.png');
   --bg-rotate: 0deg;
-  --bg-width: 100vw;
-  --bg-height: 100vh;
   --bg-opacity: 1;
   --text-primary: #000000;
   --text-primary-rgb: 17, 17, 17;
@@ -26,8 +24,6 @@
   --bg-main: #121212;
   --bg-image: url('darkmode_bg.jpg');
   --bg-rotate: 0deg;
-  --bg-width: 100vw;
-  --bg-height: 100vh;
   --bg-opacity: 0.4;
   --text-primary: #f5f5f5;
   --text-primary-rgb: 245, 245, 245;
@@ -491,11 +487,6 @@ h3 {
 
 /* ── Mobile: vertical flex column ── */
 @media (max-width: 900px) {
-  :root {
-    --bg-width: 100dvw;
-    --bg-height: 100dvh;
-  }
-
   body {
     height: auto;
     min-height: 100dvh;
